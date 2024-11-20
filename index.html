@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bốc Thăm Chia Cặp Đấu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bốc Thăm Chia Cặp Đấu</h1>
+    <div>
+        <label>Nhập tên người chơi (cách nhau bằng dấu phẩy):</label><br>
+        <input type="text" id="players" placeholder="Người chơi 1, Người chơi 2, ...">
+        <button onclick="drawTeams()">Bốc Thăm</button>
+    </div>
+    <div class="result" id="result"></div>
+    <div class="button">
+        <button onclick="reset()">Làm Mới</button>
+    </div>
+
+    <script>
+        function drawTeams() {
+            const input = document.getElementById('players').value;
+            const players = input.split(',').map(player => player.trim());
+
+            if (players.length !== 6) {
+                alert('Vui lòng nhập đúng 6 người chơi!');
+                return;
+            }
+
+            // Shuffle players
+            for (let i = players.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [players[i], players[j]] = [players[j], players[i]];
+            }
+
+            // Divide into 3 teams
+            const team1 = [players[0], players[1]];
+            const team2 = [players[2], players[3]];
+            const team3 = [players[4], players[5]];
+
+            // Display result
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p>Đội 1: ${team1.join(' và ')}</p>
+                <p>Đội 2: ${team2.join(' và ')}</p>
+                <p>Đội 3: ${team3.join(' và ')}</p>
+            `;
+        }
+
+        function reset() {
+            document.getElementById('players').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
